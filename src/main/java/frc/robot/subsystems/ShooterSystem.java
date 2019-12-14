@@ -2,6 +2,11 @@ package robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import robot.RobotMap;
+import DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Relay;
 
 public class ShooterSystem extends Subsystem {
   
@@ -11,7 +16,9 @@ public class ShooterSystem extends Subsystem {
   Talon backShootMotor;
   Relay reloader;
 
-  void enableShooter() {
+  public void initDefaultCommand() {}
+
+  public void enableShooter() {
     frontShootMotor.set(1);
     backShootMotor.set(.75);
   }
