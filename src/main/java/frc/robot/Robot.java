@@ -21,6 +21,7 @@
   import edu.wpi.first.wpilibj.DoubleSolenoid;
   import edu.wpi.first.wpilibj.SpeedControllerGroup;
   import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+  import robot.subsystems.ShooterSystem;
   /**
    * The VM is configured to automatically run this class, and to call the
    * functions corresponding to each mode, as described in the IterativeRobot
@@ -30,17 +31,7 @@
    */
   public class Robot extends IterativeRobot {
     public static OI oi;
-    private static final String kDefaultAuto = "Default";
-    private static final String kCustomAuto = "My Auto";
-    private static String m_autoSelected;
-    private static final SendableChooser<String> m_chooser = new SendableChooser<>();
-    //public static Talon frontLeft,frontRight,backLeft,backRight;
-    public static DoubleSolenoid heightSolenoid, shooterSolenoid, wheelSolenoid;
-    public static Timer timer;
-  
-    public static DifferentialDrive drive;
-    public static boolean toggleOn = false;
-    public static boolean togglePressed = false;
+    public static ShooterSystem shooter;
   
 
 
@@ -51,18 +42,22 @@
      */
     @Override
     public void robotInit() {
+
+
       RobotMap.init();
-      m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-      m_chooser.addOption("My Auto", kCustomAuto);
-      SmartDashboard.putData("Auto choices", m_chooser);
       oi = new OI();
+
+      shooter = ShooterSystem();
+
+
+      
       //frontLeft = new Talon(4);
       //frontRight = new Talon(1);
       //backLeft = new Talon(3);
       //backRight = new Talon(2);
-      shooterSolenoid = new DoubleSolenoid(4, 5); //Controls shooter height
-      heightSolenoid = new DoubleSolenoid(2,3);   //The pistons that control the pressure in the motor
-      wheelSolenoid = new DoubleSolenoid(0,1);   //The pistons that control the shooting
+      // shooterSolenoid = new DoubleSolenoid(4, 5); //Controls shooter height
+      // heightSolenoid = new DoubleSolenoid(2,3);   //The pistons that control the pressure in the motor
+      // wheelSolenoid = new DoubleSolenoid(0,1);   //The pistons that control the shooting
       
       
 
@@ -148,38 +143,22 @@
      */
     @Override
     public void teleopPeriodic() {
-      
+      shooter.enableShooter();
 
-      boolean kForward = Robot.oi.ps4_Controller.getRawButtonPressed(3);
-      boolean kReverse = Robot.oi.ps4_Controller.getRawButtonPressed(2);
-      // System.out.println(kForward);
-      // System.out.println(kReverse);
+      // boolean kForward = Robot.oi.ps4_Controller.getRawButtonPressed(3);
+      // boolean kReverse = Robot.oi.ps4_Controller.getRawButtonPressed(2);
+      // // System.out.println(kForward);
+      // // System.out.println(kReverse);
      
-      if (kForward){
-        heightSolenoid.set(DoubleSolenoid.Value.kForward);
-        System.out.println("Circle pressed");
-      }
-      if (kReverse){
-        heightSolenoid.set(DoubleSolenoid.Value.kReverse);
-      System.out.println("X pressed");
-      }
+      // if (kForward){
+      //   heightSolenoid.set(DoubleSolenoid.Value.kForward);
+      //   System.out.println("Circle pressed");
+      // }
+      // if (kReverse){
+      //   heightSolenoid.set(DoubleSolenoid.Value.kReverse);
+      // System.out.println("X pressed");
+      // }
     }
-    /** public void updateToggle(){
-      if(joystick.getRawButtonPressed(1)){
-        if(!togglePressed){
-          toggleOn = !toggleOn;
-          togglePressed = true;
-          System.out.println("Yeet");
-        }
-      }  
-      
-        else{
-          togglePressed = false;
-        }
-    }
-
-
-    */
     @Override
     public void testPeriodic() {
     }
